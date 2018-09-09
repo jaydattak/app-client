@@ -20,6 +20,7 @@ import { AppRoutingModule }  from './app-routing.module';
 import { ProjectListComponent } from './project/project-list/project-list.component';
 import { TranslatePipe } from './translate.pipe';
 import { UserListComponent } from './user/user-list/user-list.component';
+import { ParentTaskListComponent } from './task/parent-task-list/parent-task-list.component';
 
 export function translateFactory(service : TranslateService) : Function {
   return () => service.setLanguageForProperty('en');
@@ -33,7 +34,8 @@ export function translateFactory(service : TranslateService) : Function {
     UserComponent,
     ProjectListComponent,
     TranslatePipe,
-    UserListComponent
+    UserListComponent,
+    ParentTaskListComponent
   ],
   imports: [
     BrowserModule,
