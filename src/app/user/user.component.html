@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+  <div class="container small">
+    <form class="form-horizontal" #myForm="ngForm">
+      <div class="form-group">
+        <label class="col-sm-2" for="firstname">
+          {{'First Name' | translate}}:*</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="firstname" required minlength="1" name="firstname" maxlength="50" [(ngModel)]="user.firstName"
+            #name="ngModel" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2" for="lastname">
+          {{'Last Name' | translate }}:*</label>
+        <div class="col-sm-8">
+          <input type="text" class="form-control" id="lastname" required minlength="1" name="lastname" maxlength="50" [(ngModel)]="user.lastName"
+            #name="ngModel" />
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2" for="employeeid">
+          {{'Employee Id' | translate}}:*</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" id="employeeid" required minlength="1" name="employeeid" maxlength="50" [(ngModel)]="user.employeeId"
+            #name="ngModel" />
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-8 text-right">
+          <button type="button" class="btn btn-default" [disabled]="!myForm.form.valid" (click)="addUser();">{{buttonText | translate}}</button>
+          <button type="button" class="btn btn-default" (click)="resetUser()">{{'Reset' | translate}}</button>
+        </div>
+      </div>
+    </form>
+    <div class="col-sm-10 text-center large">
+      <h4 *ngIf="successMessage != ''">
+        <span class="label label-success">{{successMessage}}</span>
+      </h4>
+      <h4 *ngIf="errorMessage != ''">
+        <span class="label label-danger">{{errorMessage}}</span>
+      </h4>
+      <hr />
+    </div>
+    <div class="col-sm-10">
+      <div class="col-sm-4">
+        <input type="text" class="form-control input-sm " id="searchText" required minlength="1" placeholder="Search" name="searchText"
+          [(ngModel)]="searchText" (keyup)="searchUsers()" />
+      </div>
+      <div class="col-sm-6">
+        <label for>Sort : </label>
+        <button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('firstName')">{{'First Name' | translate }}</button>
+        <button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('lastName')">{{'Last Name' | translate }}</button>
+        <button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('id')">ID</button>
+      </div>
+    </div>
+    <div class="col-sm-10 ">&nbsp;</div>
+    <div class="list-group small" *ngFor="let obj of users | async">
+      <div class="col-sm-10 list-group-item">
+        <div class="col-sm-8">
+          <div>
+            <label>{{'First Name' | translate }} : {{obj.firstName}}</label>
+          </div>
+          <div>
+            <label>{{'Last Name' | translate }} : {{obj.lastName}}</label>
+          </div>
+          <div>
+            <label>{{'Employee Id' | translate }} : {{obj.employeeId}}</label>
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="row">
+            <button type="button" class="btn btn-primary btn-sm" (click)="editUser(obj)">{{'Edit' | translate }}</button>
+          </div>
+          <div>&nbsp;</div>
+          <div class="row">
+            <button type="button" class="btn btn-info btn-sm" (click)="deleteUser(obj.id)">{{'Delete' |  translate}}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div>&nbsp;</div>
+  </div>
+</body>
+
+</html>

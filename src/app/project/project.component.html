@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+	<div class="container small">
+		<form class="form-horizontal" #myForm="ngForm">
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="name">{{'Project' | translate }} :*</label>
+				<div class="col-sm-8">
+					<input type="text" class="form-control" id="name" required minlength="1" placeholder="{{'Enter Project Name' | translate }}"
+					 name="name" [(ngModel)]="project.name" #name="ngModel" />
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-3">
+					<label class="control-label checkbox" for="setDate">
+						<input type="checkbox" name="setDate" id="setDate" value="true" [(ngModel)]="project.setDate" (change)="resetDates()" />{{'Set Start and End Date' | translate }}</label>
+				</div>
+				<div class="col-sm-6">
+					<div class="col-sm-4">
+						<input type="date" class="form-control input-sm" id="startDate" name="startDate" [(ngModel)]="project.startDate" [disabled]="!project.setDate"
+						/>
+					</div>
+					<div class="col-sm-4">
+						<input type="date" class="form-control input-sm" id="endDate" name="endDate" [(ngModel)]="project.endDate" min="{{project.startDate}}"
+						 [disabled]="!project.setDate" />
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="priority">
+					{{'Priority' | translate }} :{{project.priority}}</label>
+				<div class="col-sm-8">
+					0
+					<input type="range" id="priority" name="priority" min="0" max="30" [(ngModel)]="project.priority" value="0" />
+				</div>
+				<div class="col-sm-2">30</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2" for="manager"> {{'Manager' | translate }} :
+				</label>
+				<div class="col-sm-6">
+					<input type="text" class="form-control" readonly name="manager" [(ngModel)]="managerName" />
+				</div>
+				<button type="button" class="btn btn-info" (click)="searchManagers()">{{'Search' | translate }}</button>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-offset-2 col-sm-8 text-right">
+					<button type="button" class="btn btn-default" [disabled]="!(myForm.form.valid && project.startDate < project.endDate)" (click)="addProject();">{{buttonText | translate}}</button>
+					<button type="button" class="btn btn-default" (click)="resetProject()">{{'Reset' | translate }}</button>
+				</div>
+			</div>
+		</form>
+		<div class="col-sm-10 text-center large">
+				<h4 *ngIf="successMessage != ''">
+				  <span class="label label-success">{{successMessage}}</span>
+				</h4>
+				<h4 *ngIf="errorMessage != ''">
+				  <span class="label label-danger">{{errorMessage}}</span>
+				</h4>
+				<hr />
+			  </div>
+		<hr />
+		<div class="col-sm-10 ">
+			<input type="text" class="form-control input-sm col" id="searchText" required minlength="1" placeholder="{{'Search' | translate }}"
+			 name="searchText" [(ngModel)]="searchText" (keyup)="searchUsers()" />
+		</div>
+		<div class="col-sm-10 ">&nbsp;</div>
+		<div class="col-sm-10 ">
+			<label>{{'Sort By' | translate }} : </label>
+			<button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('startDate')">{{'Start Date' | translate }}</button>
+			<button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('endDate')">{{'End Date' | translate }}</button>
+			<button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('priority')">{{'Priority' | translate }}</button>
+			<button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('completed')">{{'Completed' | translate }}</button>
+		</div>
+		<div class="col-sm-10 ">&nbsp;</div>
+		<div class="list-group medium" *ngFor="let projectObj of projects | async">
+			<div class="col-sm-10 list-group-item">
+				<div class="col-sm-8">
+					<div class="col-sm-12">
+						<label>{{'Project' | translate }} : {{projectObj.name}}</label>
+					</div>
+					<div class="col-sm-6">
+						<label>{{'No of tasks' | translate }} : {{projectObj.noOfTasks}}</label>
+					</div>
+					<div class="col-sm-6">
+						<label>{{'Completed' | translate }} : {{projectObj.noOfCompletedTasks}}</label>
+					</div>
+					<div class="col-sm-6">
+						<label>{{'Start Date' | translate }} : {{projectObj.startDate | date :'dd/MM/yyyy'}}</label>
+					</div>
+					<div class="col-sm-6">
+						<label>{{'End Date' | translate }} : {{projectObj.endDate | date :'dd/MM/yyyy'}}</label>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<div>
+						<label>{{'Priority' | translate }}</label>
+					</div>
+					<div>
+						<label>{{projectObj.priority}}</label>
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<div class="row">
+						<button type="button" class="btn btn-primary btn-sm" (click)="editProject(projectObj)">{{'Update' | translate }}</button>
+					</div>
+					<div>&nbsp;</div>
+					<div class="row">
+						<button type="button" class="btn btn-info btn-sm" (click)="deleteProject(projectObj.id)">{{'Suspend' | translate }}</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div>&nbsp;</div>
+	</div>
+</body>
+
+</html>

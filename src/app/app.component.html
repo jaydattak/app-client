@@ -1,0 +1,22 @@
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<h4>{{"Project Manager" | translate }}</h4>
+<div class="text-right">
+	<a (click) = "setLocale('en')">English(en)</a> | 
+	<a (click) = "setLocale('fr')">French(fr)</a>
+</div>
+<nav class="navbar">
+	<div class="container-fluid">
+		<ul class="nav navbar-nav">
+			<li class="active"><a routerLink="/project">{{"Add Project" | translate }}</a></li>
+			<li class="active"><a routerLink="/task">{{"Add Task" | translate }}</a></li>
+			<li class="active"><a routerLink="/user">{{"Add User" | translate }} </a></li>
+			<li class="active"><a routerLink="/viewtasks">{{"View Task" | translate }}</a></li>
+		</ul>
+	</div>
+</nav>
+<router-outlet></router-outlet>

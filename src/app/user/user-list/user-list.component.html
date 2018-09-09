@@ -1,0 +1,27 @@
+<div class="modal-dialog small">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" (click)="close()">&times;</button>
+      <h4 class="modal-title">{{title}}</h4>
+    </div>
+    <div class="list-group modal-body">
+      <div class="list-group-item">
+        <input type="text" class="form-control input-sm" id="name" required (keyup)="updateSearch();" minlength="1" placeholder="Enter Search Text"
+          name="name" [(ngModel)]="searchText" />
+      </div>
+
+      <div class="list-group-item">
+        <h5 class="modal-title medium text-center">Manager Name</h5>
+      </div>
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let user of users | async" (click)="setEntity(user)">
+            {{user.employeeId}} {{user.firstName}}  {{user.lastName}} 
+        </li>
+      </ul>
+    </div>
+    <div *ngIf="!users" class="modal-body">No record found!</div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" (click)="close()">Close</button>
+    </div>
+  </div>
+</div>

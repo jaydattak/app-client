@@ -1,0 +1,28 @@
+{
+    "Project Manager": "Chef de projet",
+    "Add Project": "Ajouter un projet",
+    "Add User": "Ajouter un utilisateur",
+    "View Task": "Voir la tache",
+    "Add Task": "Ajouter une tache",
+    "First Name": "Prenom",
+    "Last Name": "Nom de famille",
+    "Employee Id": "ID d'employe",
+    "Add": "Ajouter",
+    "Reset": "Reinitialiser",
+    "Update" : "mettre a jour",
+    "Edit" : "modifier",
+    "Delete" : "effacer",
+    "Suspend" :  "Suspendre",
+    "Project" : "Projet",
+    "Start Date" : "Date de debut",
+    "End Date" : "Date de fin",
+    "Set Start and End Date" : "Definir la date de début et de fin",
+    "Priority"  : "priorité",
+    "Completed" :  "Terminé",
+    "Manager" : "Directeur",
+    "No of tasks"  : "Nombre de tâches",
+    "Sort By" : "Trier par",
+    "Search" : "Chercher",
+    "Enter Project Name" : "Entrez le nom du projet"    
+
+}
