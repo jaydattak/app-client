@@ -3,6 +3,7 @@ import { DatePipe } from '@angular/common';
 import { TaskService } from "./task.service";
 import { Task } from './task';
 import { User } from '../user/user';
+import { ParentTask } from '../task/parent-task-list/parent-task';
 
 import { DialogService } from "ng2-bootstrap-modal";
 import { UserListComponent } from '../user/user-list/user-list.component';
@@ -58,11 +59,28 @@ export class TaskComponent implements OnInit {
     console.log(this.tasks);
   }
 
+  addParentTask(ptask: ParentTask){
+    
+    this.parentService.create(ptask).subscribe((res :any) => {
+        if(res.status){
+          this.resetTask();
+          this.successMessage = res.message;
+        } else{
+          this.errorMessage = this.getErrorMessage(res);
+        }
+    }, error => {
+      this.errorMessage = error;
+    }
+  }
+
+
   addTask() {
     this.resetMessages();
     if (this.buttonText == "Add") {
       if (this.task.isParentTask) { // In case of parent task is true
-        this.parentService.create(this.task.parentTask);
+        let ptask = new ParentTask();
+        ptask.name = this.task.name;
+        this.addParentTask(ptask);
       } else {
         this.service.create(this.task).subscribe((res: any) => {
           if (res.status) {
@@ -122,7 +140,7 @@ export class TaskComponent implements OnInit {
     this.task.priority = task.priority;
     this.task.isParentTask = task.isParentTask;
     this.task.user = task.user;
-    this.task.parentTask = task.parentTask;
+    this.task.parentTask = task.parentTask ? task.parentTask : new ParentTask();
     this.task.project = task.project;
     this.setManagerName(this.task.user);
   }
