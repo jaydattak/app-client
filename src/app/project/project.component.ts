@@ -137,8 +137,7 @@ export class ProjectComponent implements OnInit {
 
   searchManagers() {
     let disposable = this.dialogService.addDialog(UserListComponent, {
-      title: 'Users',
-      entity: 'user'
+      title: 'Users'
     })
       .subscribe(result => {
         if (result && result.id) {
@@ -182,4 +181,3 @@ export class ProjectComponent implements OnInit {
     return mesg;
   }
 }
-

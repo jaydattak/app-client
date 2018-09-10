@@ -1,11 +1,10 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
 import { UserService } from '../user.service';
 import { User } from '../../user/user';
 
 export interface InputModel {
-  title: string;
-  entity: string;
+  title: string
 }
 
 @Component({
@@ -18,23 +17,35 @@ export class UserListComponent extends DialogComponent<InputModel, User> impleme
   entity: string;
   result: User;
   searchText: string;
-  users = {};
-  @Input('entity') model: InputModel;
+  errorMessage: string = "";
+  users: Array<User> = [];
+
   constructor(private service: UserService, dialogService: DialogService) {
     super(dialogService);
   }
 
   ngOnInit() {
-      this.users = this.service.getAll();
+    this.service.getAll().subscribe((res: any) => {
+      this.users = res;
+    },
+      error => {
+        this.errorMessage = "Issue while getting list";
+      });
   }
 
   updateSearch() {
-    this.users = this.service.getAll();
+    console.log(this.searchText);
+    this.service.getAllBySearch(this.searchText).subscribe((res: any) => {
+      this.users = res;
+    },
+      error => {
+        this.errorMessage = "Issue while getting list";
+      });
   }
 
-  setEntity(item) {
-    this.result = item;
-    console.log(item)
+  setEntity(obj) {
+    this.result = obj;
+    console.log(obj)
     console.log(this.result);
     this.close();
   }

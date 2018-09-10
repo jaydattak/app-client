@@ -8,21 +8,22 @@
         <label class="control-label col-sm-2" for="project">{{'Project' | translate }} :*</label>
         <div class="col-sm-6">
           <input type="text" class="form-control" readonly id="project" required minlength="1" placeholder="{{'Enter Project' | translate }}"
-            name="project" [(ngModel)]="task.name" #name="ngModel" />
+            name="project" [(ngModel)]="task.project.name" #project="ngModel" />
         </div>
-        <button type="button" class="btn btn-info" (click)="searchManagers()">{{'Search' | translate }}</button>
+        <button type="button" class="btn btn-info" (click)="searchProjects()">{{'Search' | translate }}</button>
       </div>
       <div class="form-group">
-        <label class="control-label col-sm-2" for="name">{{'Task' | translate }} :*</label>
+        <label class="control-label col-sm-2" for="taskname">{{'Task' | translate }} :*</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="name" required minlength="1" placeholder="{{'Enter Task Name' | translate }}"
-            name="name" [(ngModel)]="task.name" #name="ngModel" />
+          <input type="text" class="form-control" id="taskname" required minlength="1" placeholder="{{'Enter Task Name' | translate }}"
+            name="taskname" [(ngModel)]="task.name" #taskname="ngModel" />
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-3">
-          <label class="control-label checkbox" for="setDate">
-            <input type="checkbox" name="setDate" id="setDate" value="true" [(ngModel)]="task.setDate" (change)="resetDates()" />{{'Parent Task' | translate }}</label>
+          <label class="control-label checkbox" for="isParentTask">
+            <input type="checkbox" name="isParentTask" id="isParentTask" value="true" [(ngModel)]="task.isParentTask" (change)="resetDates()"
+            />{{'Parent Task' | translate }}</label>
         </div>
       </div>
       <div class="form-group">
@@ -30,38 +31,41 @@
           {{'Priority' | translate }} :{{task.priority}}</label>
         <div class="col-sm-8">
           0
-          <input type="range" id="priority" name="priority" min="0" max="30" [(ngModel)]="task.priority" value="0" />
+          <input type="range" id="priority" name="priority" min="0" max="30" [(ngModel)]="task.priority" value="0" [disabled]="task.isParentTask"
+          />
         </div>
         <div class="col-sm-2">30</div>
       </div>
       <div class="form-group">
         <label class="control-label col-sm-2" for="parentTask"> {{'Parent Task' | translate }} :</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" readonly name="parentTask" [(ngModel)]="managerName" />
+          <input type="text" class="form-control" name="parentTask" required minlength="1" [(ngModel)]="task.parentTask.name" />
         </div>
-        <button type="button" class="btn btn-info" (click)="searchManagers()">{{'Search' | translate }}</button>
+        <button type="button" class="btn btn-info" (click)="searchParentTasks()" [disabled]="task.isParentTask">{{'Search' | translate }}</button>
       </div>
       <div class="form-group">
         <label class="control-label col-sm-2" for="startDate">{{'Start Date' | translate }} :</label>
         <div class="col-sm-2">
-          <input type="date" class="form-control input-sm" id="startDate" name="startDate" [(ngModel)]="task.startDate" />
+          <input type="date" class="form-control input-sm" id="startDate" name="startDate" [(ngModel)]="task.startDate" [disabled]="task.isParentTask"
+          />
         </div>
-        <label class="control-label col-sm-2" for="endDate">{{'End Date' | translate }}</label>
+        <label class="control-label col-sm-2" for="endDate">{{'End Date' | translate }} :</label>
         <div class="col-sm-2">
           <input type="date" class="form-control input-sm" id="endDate" name="endDate" [(ngModel)]="task.endDate" min="{{task.startDate}}"
-          />
+            [disabled]="task.isParentTask" />
         </div>
       </div>
       <div class="form-group">
         <label class="control-label col-sm-2" for="manager"> {{'User' | translate }} :</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" readonly name="manager" [(ngModel)]="managerName" />
+          <input type="text" class="form-control" readonly name="manager" required minlength="1" [(ngModel)]="managerName" />
         </div>
-        <button type="button" class="btn btn-info" (click)="searchManagers()">{{'Search' | translate }}</button>
+        <button type="button" class="btn btn-info" (click)="searchManagers()" [disabled]="task.isParentTask">{{'Search' | translate }}</button>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-8 text-right">
-          <button type="button" class="btn btn-default" [disabled]="!(myForm.form.valid && task.startDate < task.endDate)" (click)="addTask();">{{buttonText | translate}}</button>
+          <button type="button" class="btn btn-default" [disabled]="!(task.isParentTask ? ( taskname.valid &&  project.valid) : (myForm.form.valid && task.startDate < task.endDate ))"
+            (click)="addTask();">{{buttonText | translate}}</button>
           <button type="button" class="btn btn-default" (click)="resetTask()">{{'Reset' | translate }}</button>
         </div>
       </div>
@@ -78,7 +82,7 @@
     <hr />
     <div class="col-sm-10 ">
       <input type="text" class="form-control input-sm col" id="searchText" required minlength="1" placeholder="{{'Search' | translate }}"
-        name="searchText" [(ngModel)]="searchText" (keyup)="searchUsers()" />
+        name="searchText" [(ngModel)]="searchText" (keyup)="searchTasks()" />
     </div>
     <div class="col-sm-10 ">&nbsp;</div>
     <div class="col-sm-10 ">
@@ -89,7 +93,7 @@
       <button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('completed')">{{'Completed' | translate }}</button>
     </div>
     <div class="col-sm-10 ">&nbsp;</div>
-    <div class="list-group medium" *ngFor="let obj of projects | async">
+    <div class="list-group medium" *ngFor="let obj of tasks | async">
       <div class="col-sm-10 list-group-item">
         <div class="col-sm-8">
           <div class="col-sm-12">

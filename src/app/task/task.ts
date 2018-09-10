@@ -1,16 +1,19 @@
 import { User } from '../user/user'
+import { ParentTask } from './parent-task-list/parent-task';
+import { Project } from '../project/project';
 
 export class Task {
-    id : number;
+    id: number;
     name: string;
-    startDate : string;
-    endDate : string;
-    manager: User;
-    setDate: boolean;
-    priority : number;
-    constructor()
-    {
-        this.manager = new User();
-        this.priority = 0;
+    startDate: string;
+    endDate: string;
+    user: User = new User();
+    isParentTask: boolean = false;
+    parentTask: ParentTask = new ParentTask();
+    project: Project = new Project();
+    priority: number = 0;
+
+    constructor() {
+
     }
 }

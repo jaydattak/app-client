@@ -48,7 +48,8 @@ export function translateFactory(service : TranslateService) : Function {
   ],
   entryComponents: [
     ProjectListComponent,
-    UserListComponent
+    UserListComponent,
+    ParentTaskListComponent
     ],
   providers: [DatePipe, TranslateService,
   {

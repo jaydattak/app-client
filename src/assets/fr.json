@@ -23,6 +23,9 @@
     "No of tasks"  : "Nombre de tâches",
     "Sort By" : "Trier par",
     "Search" : "Chercher",
-    "Enter Project Name" : "Entrez le nom du projet"    
+    "Enter Project Name" : "Entrez le nom du projet",
+    "User" :  "Utilisateur",
+    "Task" :  "Tâche",
+    "Parent Task" : "Tâche parent"
 
 }

@@ -2,7 +2,7 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" (click)="close()">&times;</button>
-      <h4 class="modal-title">{{title}}</h4>
+      <h4 class="modal-title">{{title | translate}}</h4>
     </div>
     <div class="list-group modal-body">
       <div class="list-group-item">
@@ -11,15 +11,15 @@
       </div>
 
       <div class="list-group-item">
-        <h5 class="modal-title medium text-center">{{entity}} Name</h5>
+        <h5 class="modal-title medium text-center">{{'Select Project' | translate}}</h5>
       </div>
       <ul class="list-group">
-        <li class="list-group-item" *ngFor="let item of items | async" (click)="setEntity(item)">{{item.name}}</li>
+        <li class="list-group-item" *ngFor="let item of projects" (click)="setEntity(item)">{{item.name}}</li>
       </ul>
     </div>
-    <div *ngIf="!items" class="modal-body">No record found!</div>
+    <div *ngIf="projects.length == 0" class="modal-body">{{'No record found!' | translate}}</div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-default" (click)="close()">Close</button>
+      <button type="button" class="btn btn-default" (click)="close()">{{'Close' | translate}}</button>
     </div>
   </div>
 </div>
