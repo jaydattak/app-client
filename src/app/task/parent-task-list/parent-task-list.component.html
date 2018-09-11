@@ -6,8 +6,8 @@
     </div>
     <div class="list-group modal-body">
       <div class="list-group-item">
-        <input type="text" class="form-control input-sm" id="name" required (keyup)="updateSearch();" minlength="1" placeholder="Enter Search Text"
-          name="name" [(ngModel)]="searchText" />
+        <input type="text" class="form-control input-sm" id="name" required (keyup)="updateSearch();" minlength="1"
+          placeholder="{{'Enter Search Text' | translate }}" name="name" [(ngModel)]="searchText" />
       </div>
 
       <div class="list-group-item">

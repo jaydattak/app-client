@@ -1,21 +1,21 @@
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<h4>{{"Project Manager" | translate }}</h4>
-<div class="text-right">
-	<a (click) = "setLocale('en')">English(en)</a> | 
-	<a (click) = "setLocale('fr')">French(fr)</a>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div class="container-fluid">&nbsp;</div>
+<div style="margin-left: 20px;">
+	<h4>&nbsp;<label>{{"Project Manager" | translate }}</label></h4>
+</div>
+<div class="text-right" style="margin-right: 20px;">{{'Change Language' | translate}}:
+	<a (click)="setLocale('en')">{{'English(en)' | translate}}</a> |
+	<a (click)="setLocale('fr')">{{'French(fr)' | translate}}</a>
 </div>
 <nav class="navbar">
 	<div class="container-fluid">
 		<ul class="nav navbar-nav">
 			<li class="active"><a routerLink="/project">{{"Add Project" | translate }}</a></li>
-			<li class="active"><a routerLink="/task">{{"Add Task" | translate }}</a></li>
+			<li class="active"><a routerLink="/task/addtask">{{"Add Task" | translate }}</a></li>
 			<li class="active"><a routerLink="/user">{{"Add User" | translate }} </a></li>
-			<li class="active"><a routerLink="/viewtasks">{{"View Task" | translate }}</a></li>
+			<li class="active"><a routerLink="/viewtask">{{"View Task" | translate }}</a></li>
 		</ul>
 	</div>
 </nav>

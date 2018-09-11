@@ -10,12 +10,15 @@ import { UserListComponent } from '../user/user-list/user-list.component';
 import { ParentTaskListComponent } from './parent-task-list/parent-task-list.component';
 import { ProjectListComponent } from '../project/project-list/project-list.component';
 import { ParentTaskService } from './parent-task-list/parent-task.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Project } from '../project/project';
+
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.css'],
-  providers: [TaskService, ParentTaskService]
+  providers: [TaskService, ParentTaskService, DatePipe]
 })
 
 export class TaskComponent implements OnInit {
@@ -26,15 +29,38 @@ export class TaskComponent implements OnInit {
   searchText: string;
   task = new Task();
   managerName: string = "";
+  showAddView: boolean = false;
+  projectSearch: Project = new Project();
   private viewContainerRef: ViewContainerRef;
 
-  constructor(private service: TaskService, private parentService: ParentTaskService, private datePipe: DatePipe, private dialogService: DialogService, viewContainerRef: ViewContainerRef) {
-    this.tasks = service.getAll();
+  constructor(private router: Router, private route: ActivatedRoute, private service: TaskService, private parentService: ParentTaskService, private datePipe: DatePipe, private dialogService: DialogService, viewContainerRef: ViewContainerRef) {
+    //this.tasks = service.getAll();
     this.buttonText = "Add";
     this.viewContainerRef = viewContainerRef;
+
   }
 
   ngOnInit() {
+    let id = this.route.snapshot.paramMap.get("id");
+    let taskObj = this.route.snapshot.paramMap.get("task");
+    console.log(id);
+    if (id == 'addtask') {
+      this.showAddView = true;
+      if (taskObj) {
+        let obj = JSON.parse(taskObj);
+        if (!obj.parentTask) {
+          obj.parentTask = new ParentTask();
+        }
+        this.task = obj;
+        this.buttonText = "Update";
+        this.setManagerName(this.task.user);
+      } else {
+        this.task = new Task();
+      }
+    } else {
+      this.tasks = this.service.getAll();
+      this.showAddView = false;
+    }
     this.resetDates();
   }
 
@@ -59,18 +85,18 @@ export class TaskComponent implements OnInit {
     console.log(this.tasks);
   }
 
-  addParentTask(ptask: ParentTask){
-    
-    this.parentService.create(ptask).subscribe((res :any) => {
-        if(res.status){
-          this.resetTask();
-          this.successMessage = res.message;
-        } else{
-          this.errorMessage = this.getErrorMessage(res);
-        }
+  addParentTask(ptask: ParentTask) {
+
+    this.parentService.create(ptask).subscribe((res: any) => {
+      if (res.status) {
+        this.resetTask();
+        this.successMessage = res.message;
+      } else {
+        this.errorMessage = this.getErrorMessage(res);
+      }
     }, error => {
       this.errorMessage = error;
-    }
+    });
   }
 
 
@@ -120,6 +146,7 @@ export class TaskComponent implements OnInit {
   editTask(task: Task) {
     this.setValueToMainTask(task);
     this.buttonText = "Update";
+    this.router.navigate(['/task/addtask', { task: JSON.stringify(task) }]);
   }
 
   resetTask() {
@@ -142,6 +169,7 @@ export class TaskComponent implements OnInit {
     this.task.user = task.user;
     this.task.parentTask = task.parentTask ? task.parentTask : new ParentTask();
     this.task.project = task.project;
+    this.projectSearch = new Project();
     this.setManagerName(this.task.user);
   }
 
@@ -164,7 +192,7 @@ export class TaskComponent implements OnInit {
 
   sortBySelection(str: string) {
     this.resetMessages()
-    this.tasks = this.service.getAllBySort(str);
+    this.tasks = this.service.getAllBySort(str, this.projectSearch);
   }
 
   searchManagers() {
@@ -201,6 +229,18 @@ export class TaskComponent implements OnInit {
       });
   }
 
+  searchTasksByProjects() {
+    let disposable = this.dialogService.addDialog(ProjectListComponent, {
+      title: 'Project'
+    })
+      .subscribe(result => {
+        if (result && result.id) {
+          this.projectSearch = result;
+          this.tasks = this.service.getTasksByProject(result.id);
+        }
+      });
+  }
+
   searchTasks() {
     this.resetMessages();
     if (this.searchText == "") {
@@ -230,6 +270,20 @@ export class TaskComponent implements OnInit {
       mesg += ' : ' + res.reason;
     }
     return mesg;
+  }
+
+  completeTask(task: Task) {
+    task.status = 'Completed';
+    this.service.update(task).subscribe((res: any) => {
+      if (res.status) {
+        this.resetTask();
+        this.successMessage = res.message;
+      } else {
+        this.errorMessage = this.getErrorMessage(res);
+      }
+    }, error => {
+      this.errorMessage = error;
+    });
   }
 
 }

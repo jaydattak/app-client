@@ -26,6 +26,17 @@
     "Enter Project Name" : "Entrez le nom du projet",
     "User" :  "Utilisateur",
     "Task" :  "Tâche",
-    "Parent Task" : "Tâche parent"
-
+    "Parent Task" : "Tâche parent",
+    "Start": "Début",
+    "End" : "Fin",
+    "Parent" :"Parent",
+    "End Task" : "Tâche finale",
+    "Select Project" : "Sélectionner un projet",
+    "Select Parent Task":  "Sélectionner une tâche parent",
+    "Select User" :  "Sélectionnez un utilisateur",
+    "Enter Task" : "Entrez la tâche",
+    "The task has no parent" : "La tâche n'a pas de parent",
+    "Enter Search Text" : "Saisir le texte de recherche",
+    "Users": "Utilisateurs",
+    "Change Language" : "Changer de langue"
 }

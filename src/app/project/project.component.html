@@ -14,12 +14,13 @@
 			<div class="form-group">
 				<div class="col-sm-3">
 					<label class="control-label checkbox" for="setDate">
-						<input type="checkbox" name="setDate" id="setDate" value="true" [(ngModel)]="project.setDate" (change)="resetDates()" />{{'Set Start and End Date' | translate }}</label>
+						<input type="checkbox" name="setDate" id="setDate" value="true" [(ngModel)]="project.setDate" (change)="resetDates()" />{{'Set
+						Start and End Date' | translate }}</label>
 				</div>
 				<div class="col-sm-6">
 					<div class="col-sm-4">
-						<input type="date" class="form-control input-sm" id="startDate" name="startDate" [(ngModel)]="project.startDate" [disabled]="!project.setDate"
-						/>
+						<input type="date" class="form-control input-sm" id="startDate" name="startDate" [(ngModel)]="project.startDate"
+						 [disabled]="!project.setDate" />
 					</div>
 					<div class="col-sm-4">
 						<input type="date" class="form-control input-sm" id="endDate" name="endDate" [(ngModel)]="project.endDate" min="{{project.startDate}}"
@@ -46,7 +47,8 @@
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-8 text-right">
-					<button type="button" class="btn btn-default" [disabled]="!(myForm.form.valid && project.startDate < project.endDate)" (click)="addProject();">{{buttonText | translate}}</button>
+					<button type="button" class="btn btn-default" [disabled]="!(myForm.form.valid && project.startDate < project.endDate)"
+					 (click)="addProject();">{{buttonText | translate}}</button>&nbsp;
 					<button type="button" class="btn btn-default" (click)="resetProject()">{{'Reset' | translate }}</button>
 				</div>
 			</div>
@@ -67,11 +69,16 @@
 		</div>
 		<div class="col-sm-10 ">&nbsp;</div>
 		<div class="col-sm-10 ">
-			<label>{{'Sort By' | translate }} : </label>
-			<button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('startDate')">{{'Start Date' | translate }}</button>
-			<button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('endDate')">{{'End Date' | translate }}</button>
-			<button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('priority')">{{'Priority' | translate }}</button>
-			<button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('completed')">{{'Completed' | translate }}</button>
+			<label>{{'Sort By' | translate }} : &nbsp;</label>
+			<button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('startDate')">{{'Start Date' | translate
+				}}</button>
+			&nbsp;<button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('endDate')">{{'End Date' |
+				translate }}</button>
+			&nbsp;<button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('priority')">{{'Priority' |
+				translate }}</button>
+			&nbsp;<button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('completed')">{{'Completed' |
+				translate
+				}}</button>
 		</div>
 		<div class="col-sm-10 ">&nbsp;</div>
 		<div class="list-group medium" *ngFor="let projectObj of projects | async">
@@ -107,7 +114,8 @@
 					</div>
 					<div>&nbsp;</div>
 					<div class="row">
-						<button type="button" class="btn btn-info btn-sm" (click)="deleteProject(projectObj.id)">{{'Suspend' | translate }}</button>
+						<button type="button" class="btn btn-info btn-sm" (click)="deleteProject(projectObj.id)">{{'Suspend' | translate
+							}}</button>
 					</div>
 				</div>
 			</div>

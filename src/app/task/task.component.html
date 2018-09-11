@@ -3,11 +3,11 @@
 
 <body>
   <div class="container small">
-    <form class="form-horizontal" #myForm="ngForm">
+    <form class="form-horizontal" #myForm="ngForm" *ngIf="showAddView">
       <div class="form-group">
         <label class="control-label col-sm-2" for="project">{{'Project' | translate }} :*</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" readonly id="project" required minlength="1" placeholder="{{'Enter Project' | translate }}"
+          <input type="text" class="form-control" readonly id="project" required minlength="1" placeholder="{{'Select Project' | translate }}"
             name="project" [(ngModel)]="task.project.name" #project="ngModel" />
         </div>
         <button type="button" class="btn btn-info" (click)="searchProjects()">{{'Search' | translate }}</button>
@@ -15,15 +15,15 @@
       <div class="form-group">
         <label class="control-label col-sm-2" for="taskname">{{'Task' | translate }} :*</label>
         <div class="col-sm-8">
-          <input type="text" class="form-control" id="taskname" required minlength="1" placeholder="{{'Enter Task Name' | translate }}"
+          <input type="text" class="form-control" id="taskname" required minlength="1" placeholder="{{'Enter Task' | translate }}"
             name="taskname" [(ngModel)]="task.name" #taskname="ngModel" />
         </div>
       </div>
       <div class="form-group">
         <div class="col-sm-3">
           <label class="control-label checkbox" for="isParentTask">
-            <input type="checkbox" name="isParentTask" id="isParentTask" value="true" [(ngModel)]="task.isParentTask" (change)="resetDates()"
-            />{{'Parent Task' | translate }}</label>
+            <input type="checkbox" name="isParentTask" id="isParentTask" value="true" [(ngModel)]="task.isParentTask"
+              (change)="resetDates()" />{{'Parent Task' | translate }}</label>
         </div>
       </div>
       <div class="form-group">
@@ -31,23 +31,25 @@
           {{'Priority' | translate }} :{{task.priority}}</label>
         <div class="col-sm-8">
           0
-          <input type="range" id="priority" name="priority" min="0" max="30" [(ngModel)]="task.priority" value="0" [disabled]="task.isParentTask"
-          />
+          <input type="range" id="priority" name="priority" min="0" max="30" [(ngModel)]="task.priority" value="0"
+            [disabled]="task.isParentTask" />
         </div>
         <div class="col-sm-2">30</div>
       </div>
       <div class="form-group">
         <label class="control-label col-sm-2" for="parentTask"> {{'Parent Task' | translate }} :</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" name="parentTask" required minlength="1" [(ngModel)]="task.parentTask.name" />
+          <input type="text" class="form-control" readonly name="parentTask" [(ngModel)]="task.parentTask.name"
+            placeholder="{{'Select Parent Task' | translate }}" />
         </div>
-        <button type="button" class="btn btn-info" (click)="searchParentTasks()" [disabled]="task.isParentTask">{{'Search' | translate }}</button>
+        <button type="button" class="btn btn-info" (click)="searchParentTasks()" [disabled]="task.isParentTask">{{'Search'
+          | translate }}</button>
       </div>
       <div class="form-group">
         <label class="control-label col-sm-2" for="startDate">{{'Start Date' | translate }} :</label>
         <div class="col-sm-2">
-          <input type="date" class="form-control input-sm" id="startDate" name="startDate" [(ngModel)]="task.startDate" [disabled]="task.isParentTask"
-          />
+          <input type="date" class="form-control input-sm" id="startDate" name="startDate" [(ngModel)]="task.startDate"
+            [disabled]="task.isParentTask" />
         </div>
         <label class="control-label col-sm-2" for="endDate">{{'End Date' | translate }} :</label>
         <div class="col-sm-2">
@@ -58,14 +60,16 @@
       <div class="form-group">
         <label class="control-label col-sm-2" for="manager"> {{'User' | translate }} :</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" readonly name="manager" required minlength="1" [(ngModel)]="managerName" />
+          <input type="text" class="form-control" readonly name="manager" required minlength="1" [(ngModel)]="managerName"
+            placeholder="{{'Select User' | translate }}" />
         </div>
-        <button type="button" class="btn btn-info" (click)="searchManagers()" [disabled]="task.isParentTask">{{'Search' | translate }}</button>
+        <button type="button" class="btn btn-info" (click)="searchManagers()" [disabled]="task.isParentTask">{{'Search'
+          | translate }}</button>
       </div>
       <div class="form-group">
         <div class="col-sm-offset-2 col-sm-8 text-right">
           <button type="button" class="btn btn-default" [disabled]="!(task.isParentTask ? ( taskname.valid &&  project.valid) : (myForm.form.valid && task.startDate < task.endDate ))"
-            (click)="addTask();">{{buttonText | translate}}</button>
+            (click)="addTask();">{{buttonText | translate}}</button>&nbsp;
           <button type="button" class="btn btn-default" (click)="resetTask()">{{'Reset' | translate }}</button>
         </div>
       </div>
@@ -77,50 +81,82 @@
       <h4 *ngIf="errorMessage != ''">
         <span class="label label-danger">{{errorMessage}}</span>
       </h4>
+    </div>
+    <div class="col-sm-12">
       <hr />
     </div>
-    <hr />
-    <div class="col-sm-10 ">
-      <input type="text" class="form-control input-sm col" id="searchText" required minlength="1" placeholder="{{'Search' | translate }}"
-        name="searchText" [(ngModel)]="searchText" (keyup)="searchTasks()" />
-    </div>
-    <div class="col-sm-10 ">&nbsp;</div>
-    <div class="col-sm-10 ">
-      <label>{{'Sort By' | translate }} : </label>
-      <button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('startDate')">{{'Start Date' | translate }}</button>
-      <button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('endDate')">{{'End Date' | translate }}</button>
-      <button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('priority')">{{'Priority' | translate }}</button>
-      <button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('completed')">{{'Completed' | translate }}</button>
-    </div>
-    <div class="col-sm-10 ">&nbsp;</div>
-    <div class="list-group medium" *ngFor="let obj of tasks | async">
-      <div class="col-sm-10 list-group-item">
-        <div class="col-sm-8">
-          <div class="col-sm-12">
-            <label>{{'Task' | translate }} : {{obj.name}}</label>
-          </div>
+    <div *ngIf="!showAddView">
+      <div class="form-group form-horizontal">
+        <div class="col-sm-5">
+          <label class="control-label col-sm-2" for="projectSearch">{{'Project' | translate }}:*</label>
           <div class="col-sm-6">
-            <label>{{'Start Date' | translate }} : {{obj.startDate | date :'dd/MM/yyyy'}}</label>
+            <input type="text" class="form-control" readonly id="projectSearch" required minlength="1" placeholder="{{'Select Project' | translate }}"
+              name="projectSearch" [(ngModel)]="projectSearch.name" #project="ngModel" />
           </div>
-          <div class="col-sm-6">
-            <label>{{'End Date' | translate }} : {{obj.endDate | date :'dd/MM/yyyy'}}</label>
-          </div>
+          <button type="button" class="btn btn-info" (click)="searchTasksByProjects()">{{'Search' | translate }}</button>
         </div>
-        <div class="col-sm-2">
-          <div>
-            <label>{{'Priority' | translate }}</label>
-          </div>
-          <div>
-            <label>{{obj.priority}}</label>
-          </div>
+        <div class="col-sm-6 text-right">
+          <label>{{'Sort By' | translate }} : &nbsp;</label>
+          <button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('startDate')">{{'Start Date' |
+            translate }}</button>&nbsp;
+          <button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('endDate')">{{'End Date' |
+            translate
+            }}</button>&nbsp;
+          <button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('priority')">{{'Priority' |
+            translate
+            }}</button>&nbsp;
+          <button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('completed')">{{'Completed' |
+            translate }}</button>
         </div>
-        <div class="col-sm-2">
-          <div class="row">
-            <button type="button" class="btn btn-primary btn-sm" (click)="editTask(obj)">{{'Update' | translate }}</button>
+      </div>
+      <div class="col-sm-12 ">&nbsp;</div>
+      <div class="list-group medium" *ngFor="let obj of tasks | async">
+        <div class="col-sm-12 list-group-item">
+          <div class="col-sm-3">
+            <div>
+              <label>{{'Task' | translate }}</label>
+            </div>
+            <div>
+              <span>{{obj.name}}</span>
+            </div>
           </div>
-          <div>&nbsp;</div>
-          <div class="row">
-            <button type="button" class="btn btn-info btn-sm" (click)="deleteTask(obj.id)">{{'Suspend' | translate }}</button>
+          <div class="col-sm-3">
+            <div>
+              <label>{{'Parent' | translate }}</label>
+            </div>
+            <div>
+              <span *ngIf="obj.parentTask">{{obj.parentTask.name}}</span>
+              <span *ngIf="!obj.parentTask">{{'The task has no parent' | translate}}</span>
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <div>
+              <label>{{'Priority' | translate }}</label>
+            </div>
+            <div>
+              <span>{{obj.priority}}</span>
+            </div>
+          </div>
+          <div class="col-sm-1">
+            <div>
+              <label>{{'Start' | translate }}</label>
+            </div>
+            <div>
+              <span>{{obj.startDate | date :'dd/MM/yyyy'}}</span>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div>
+              <label>{{'End' | translate }}</label>
+            </div>
+            <div>
+              <span>{{obj.endDate | date :'dd/MM/yyyy'}}</span>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-primary btn-sm" (click)="editTask(obj)">{{'Edit' | translate }}</button>
+            &nbsp;
+            <button type="button" class="btn btn-info btn-sm" (click)="completeTask(obj)">{{'End Task' | translate }}</button>
           </div>
         </div>
       </div>

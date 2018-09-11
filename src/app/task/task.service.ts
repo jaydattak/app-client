@@ -1,10 +1,10 @@
-
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Task } from './task';
 import { Http, Headers, Response, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { TranslateService } from '../translate.service';
+import { Project } from '../project/project';
 
 @Injectable()
 export class TaskService {
@@ -46,13 +46,24 @@ export class TaskService {
             .catch((error: any) => Observable.throw(error || 'Server error'));
     }
 
-    getAllBySort(sortText: string): Observable<Task[]> {
-        return this.http.get(this.getRequestUrl('sort/' + sortText))
+    getAllBySort(sortText: string, project: Project): Observable<Task[]> {
+        let url = this.getRequestUrl('sort/' + sortText);
+        if (project && project.id != null) {
+            url = this.getRequestUrl('sort/' + project.id + "/" + sortText);
+        }
+        return this.http.get(url)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error || 'Server error'));
     }
+
     getAllBySearch(searchText: string): Observable<Task[]> {
         return this.http.get(this.getRequestUrl('search/' + searchText))
+            .map((res: Response) => res.json())
+            .catch((error: any) => Observable.throw(error || 'Server error'));
+    }
+
+    getTasksByProject(id: number) {
+        return this.http.get(this.getRequestUrl('list/project/' + id))
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error || 'Server error'));
     }

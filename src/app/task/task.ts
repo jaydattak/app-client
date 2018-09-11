@@ -12,7 +12,7 @@ export class Task {
     parentTask: ParentTask = new ParentTask();
     project: Project = new Project();
     priority: number = 0;
-
+    status : string;
     constructor() {
 
     }

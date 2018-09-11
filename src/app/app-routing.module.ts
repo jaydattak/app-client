@@ -9,7 +9,8 @@ import { UserComponent }  from './user/user.component';
 const routes: Routes = [
   { path: '', redirectTo: '/project', pathMatch: 'full' },
   { path: 'project', component: ProjectComponent },
-  { path: 'task', component: TaskComponent },
+  { path: 'task/:id', component: TaskComponent },
+  { path: 'viewtask', component: TaskComponent },
   { path: 'user', component: UserComponent }
 ];
 
