@@ -19,6 +19,7 @@ export class UserListComponent extends DialogComponent<InputModel, User> impleme
   searchText: string;
   errorMessage: string = "";
   users: Array<User> = [];
+  norecordfound : boolean = false;
 
   constructor(private service: UserService, dialogService: DialogService) {
     super(dialogService);
@@ -27,6 +28,11 @@ export class UserListComponent extends DialogComponent<InputModel, User> impleme
   ngOnInit() {
     this.service.getAll().subscribe((res: any) => {
       this.users = res;
+      if(this.users.length > 0){
+        this.norecordfound = false; 
+      }else{
+        this.norecordfound = true; 
+      }
     },
       error => {
         this.errorMessage = "Issue while getting list";
@@ -36,6 +42,11 @@ export class UserListComponent extends DialogComponent<InputModel, User> impleme
   updateSearch() {
     this.service.getAllBySearch(this.searchText).subscribe((res: any) => {
       this.users = res;
+      if(this.users.length > 0){
+        this.norecordfound = false; 
+      }else{
+        this.norecordfound = true; 
+      }
     },
       error => {
         this.errorMessage = "Issue while getting list";

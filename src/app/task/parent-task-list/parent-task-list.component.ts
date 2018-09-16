@@ -21,6 +21,7 @@ export class ParentTaskListComponent extends DialogComponent<InputModel, ParentT
   searchText: string;
   errorMessage: string = "";
   parentTasks: Array<ParentTask> = [];
+  norecordfound : boolean = false;
 
   constructor(private service: ParentTaskService, dialogService: DialogService) {
     super(dialogService);
@@ -29,6 +30,11 @@ export class ParentTaskListComponent extends DialogComponent<InputModel, ParentT
   ngOnInit() {
     this.service.getAll().subscribe((res: any) => {
       this.parentTasks = res;
+      if(this.parentTasks.length > 0){
+        this.norecordfound = false; 
+      }else{
+        this.norecordfound = true; 
+      }
     },
       error => {
         this.errorMessage = "Issue while getting list";
@@ -38,6 +44,11 @@ export class ParentTaskListComponent extends DialogComponent<InputModel, ParentT
   updateSearch() {
     this.service.getAllBySearch(this.searchText).subscribe((res: any) => {
       this.parentTasks = res;
+      if(this.parentTasks.length > 0){
+        this.norecordfound = false; 
+      }else{
+        this.norecordfound = true; 
+      }
     },
       error => {
         this.errorMessage = "Issue while getting list";

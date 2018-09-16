@@ -31,6 +31,7 @@ export class TaskComponent implements OnInit {
   managerName: string = "";
   showAddView: boolean = false;
   projectSearch: Project = new Project();
+  editAction = false;
   private viewContainerRef: ViewContainerRef;
 
   constructor(private router: Router, private route: ActivatedRoute, private service: TaskService, private parentService: ParentTaskService, private datePipe: DatePipe, private dialogService: DialogService, viewContainerRef: ViewContainerRef) {
@@ -52,6 +53,7 @@ export class TaskComponent implements OnInit {
         }
         this.task = obj;
         this.buttonText = "Update";
+        this.editAction = true;
         this.setManagerName(this.task.user);
       } else {
         this.task = new Task();
@@ -153,6 +155,7 @@ export class TaskComponent implements OnInit {
     this.buttonText = "Add";
     this.resetMessages();
     this.resetDates();
+    this.editAction = false;
   }
 
   setValueToMainTask(task) {

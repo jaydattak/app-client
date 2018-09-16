@@ -19,7 +19,7 @@
         </li>
       </ul>
     </div>
-    <div *ngIf="users.length == 0" class="modal-body">{{'No record found!' | translate}}</div>
+    <div *ngIf="norecordfound" class="modal-body">{{'No record found!' | translate}}</div>
     <div class="modal-footer">
       <button type="button" class="btn btn-default" (click)="close()">{{'Close' | translate}}</button>
     </div>
