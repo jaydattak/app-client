@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DialogComponent, DialogService } from 'ng2-bootstrap-modal';
 import { ProjectService } from "../../project/project.service";
-import { User } from '../../user/user';
 import { Project } from '../project';
 
 export interface InputModel {
@@ -21,19 +20,23 @@ export class ProjectListComponent extends DialogComponent<InputModel, Project> i
   searchText: string;
   errorMessage: string = "";
   projects: Array<Project> = [];
-  norecordfound : boolean = false;
- 
+  norecordfound: boolean = false;
+
   constructor(private service: ProjectService, dialogService: DialogService) {
     super(dialogService);
   }
 
   ngOnInit() {
+    this.initItems();
+  }
+
+  initItems() {
     this.service.getAll().subscribe((res: any) => {
       this.projects = res;
-      if(this.projects.length > 0){
-        this.norecordfound = false; 
-      }else{
-        this.norecordfound = true; 
+      if (this.projects.length > 0) {
+        this.norecordfound = false;
+      } else {
+        this.norecordfound = true;
       }
     },
       error => {
@@ -42,17 +45,21 @@ export class ProjectListComponent extends DialogComponent<InputModel, Project> i
   }
 
   updateSearch() {
-    this.service.getAllBySearch(this.searchText).subscribe((res: any) => {
-      this.projects = res;
-      if(this.projects.length > 0){
-        this.norecordfound = false; 
-      }else{
-        this.norecordfound = true; 
-      }
-    },
-      error => {
-        this.errorMessage = "Issue while getting list";
-      });
+    if (this.searchText == "") {
+      this.initItems();
+    } else {
+      this.service.getAllBySearch(this.searchText).subscribe((res: any) => {
+        this.projects = res;
+        if (this.projects.length > 0) {
+          this.norecordfound = false;
+        } else {
+          this.norecordfound = true;
+        }
+      },
+        error => {
+          this.errorMessage = "Issue while getting list";
+        });
+    }
   }
 
   setEntity(obj) {
