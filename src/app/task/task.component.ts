@@ -111,7 +111,7 @@ export class TaskComponent implements OnInit {
         this.service.create(this.task).subscribe((res: any) => {
           if (res.status) {
             this.resetTask();
-            this.loadAll();
+            //this.loadAll();
             this.successMessage = res.message;
           } else {
             this.errorMessage = this.getErrorMessage(res);
@@ -132,7 +132,7 @@ export class TaskComponent implements OnInit {
       if (res.status) {
         this.resetTask();
         this.buttonText = "Add";
-        this.loadAll();
+        //this.loadAll();
         this.successMessage = res.message;
       } else {
         this.errorMessage = this.getErrorMessage(res);
