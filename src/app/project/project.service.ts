@@ -27,7 +27,6 @@ export class ProjectService {
     }
 
     create(project: Project) {
-        console.log(project);
         return this.http.post(this.getRequestUrl('add'), project)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error || 'Server error'));

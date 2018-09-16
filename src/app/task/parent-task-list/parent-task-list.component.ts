@@ -36,7 +36,6 @@ export class ParentTaskListComponent extends DialogComponent<InputModel, ParentT
   }
 
   updateSearch() {
-    console.log(this.searchText);
     this.service.getAllBySearch(this.searchText).subscribe((res: any) => {
       this.parentTasks = res;
     },
@@ -47,8 +46,6 @@ export class ParentTaskListComponent extends DialogComponent<InputModel, ParentT
 
   setEntity(obj) {
     this.result = obj;
-    console.log(obj)
-    console.log(this.result);
     this.close();
   }
 

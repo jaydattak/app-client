@@ -28,7 +28,6 @@ export class TaskService {
     }
 
     create(task: Task) {
-        console.log(task);
         return this.http.post(this.getRequestUrl('add'), task)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error || 'Server error'));

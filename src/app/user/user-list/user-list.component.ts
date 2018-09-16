@@ -34,7 +34,6 @@ export class UserListComponent extends DialogComponent<InputModel, User> impleme
   }
 
   updateSearch() {
-    console.log(this.searchText);
     this.service.getAllBySearch(this.searchText).subscribe((res: any) => {
       this.users = res;
     },
@@ -45,8 +44,6 @@ export class UserListComponent extends DialogComponent<InputModel, User> impleme
 
   setEntity(obj) {
     this.result = obj;
-    console.log(obj)
-    console.log(this.result);
     this.close();
   }
 

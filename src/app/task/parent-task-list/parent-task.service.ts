@@ -33,7 +33,6 @@ export class ParentTaskService {
   }
 
   create(task: ParentTask) {
-    console.log(task);
     return this.http.post(this.getRequestUrl('add'), task)
       .map((res: Response) => res.json())
       .catch((error: any) => Observable.throw(error || 'Server error'));

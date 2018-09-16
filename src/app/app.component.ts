@@ -12,7 +12,6 @@ export class AppComponent {
   }
 
   setLocale(lang: string){
-    console.log(lang);
     this.translateService.setLanguageForProperty(lang);
   }
 }

@@ -43,7 +43,6 @@ export class TaskComponent implements OnInit {
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get("id");
     let taskObj = this.route.snapshot.paramMap.get("task");
-    console.log(id);
     if (id == 'addtask') {
       this.showAddView = true;
       if (taskObj) {
@@ -82,7 +81,6 @@ export class TaskComponent implements OnInit {
 
   private loadAll() {
     this.tasks = this.service.getAll();
-    console.log(this.tasks);
   }
 
   addParentTask(ptask: ParentTask) {
@@ -158,7 +156,6 @@ export class TaskComponent implements OnInit {
   }
 
   setValueToMainTask(task) {
-    console.log(task);
     this.resetMessages();
     this.task.id = task.id;
     this.task.name = task.name;
@@ -185,7 +182,6 @@ export class TaskComponent implements OnInit {
 
   transform(dateVal: string): Date {
     let dateArray = dateVal.split("-");
-    console.log(dateVal);
     let dateObject = new Date(parseInt(dateArray[1]), parseInt(dateArray[2]) - 1, parseInt(dateArray[3]));
     return dateObject;
   }

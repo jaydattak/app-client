@@ -36,7 +36,6 @@ export class ProjectListComponent extends DialogComponent<InputModel, Project> i
   }
 
   updateSearch() {
-    console.log(this.searchText);
     this.service.getAllBySearch(this.searchText).subscribe((res: any) => {
       this.projects = res;
     },
@@ -47,8 +46,6 @@ export class ProjectListComponent extends DialogComponent<InputModel, Project> i
 
   setEntity(obj) {
     this.result = obj;
-    console.log(obj)
-    console.log(this.result);
     this.close();
   }
 

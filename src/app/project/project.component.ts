@@ -125,7 +125,6 @@ export class ProjectComponent implements OnInit {
 
   transform(dateVal: string): Date {
     let dateArray = dateVal.split("-");
-    console.log(dateVal);
     let dateObject = new Date(parseInt(dateArray[1]), parseInt(dateArray[2]) - 1, parseInt(dateArray[3]));
     return dateObject;
   }
