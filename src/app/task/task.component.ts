@@ -272,7 +272,7 @@ export class TaskComponent implements OnInit {
   }
 
   completeTask(task: Task) {
-    task.status = 'Completed';
+    task.status = 'completed';
     this.service.update(task).subscribe((res: any) => {
       if (res.status) {
         this.resetTask();
