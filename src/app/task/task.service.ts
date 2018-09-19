@@ -28,12 +28,18 @@ export class TaskService {
     }
 
     create(task: Task) {
+        if (task.parentTask && task.parentTask.id == null) {
+            task.parentTask = null;
+        }
         return this.http.post(this.getRequestUrl('add'), task)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error || 'Server error'));
     }
 
     update(task: Task) {
+        if (task.parentTask && task.parentTask.id == null) {
+            task.parentTask = null;
+        }
         return this.http.put(this.getRequestUrl(task.id), task)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error || 'Server error'));

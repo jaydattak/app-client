@@ -39,7 +39,7 @@
       <div class="form-group">
         <label class="control-label col-sm-2" for="parentTask"> {{'Parent Task' | translate }} :</label>
         <div class="col-sm-6">
-          <input type="text" class="form-control" readonly name="parentTask" [(ngModel)]="task.parentTask.name"
+          <input type="text" class="form-control" readonly name="parentTask" [(ngModel)]="parentTaskName"
             placeholder="{{'Select Parent Task' | translate }}" />
         </div>
         <button type="button" class="btn btn-info" (click)="searchParentTasks()" [disabled]="task.isParentTask">{{'Search'

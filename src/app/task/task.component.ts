@@ -29,6 +29,7 @@ export class TaskComponent implements OnInit {
   searchText: string;
   task = new Task();
   managerName: string = "";
+  parentTaskName: string = "";
   showAddView: boolean = false;
   projectSearch: Project = new Project();
   editAction = false;
@@ -55,6 +56,7 @@ export class TaskComponent implements OnInit {
         this.buttonText = "Update";
         this.editAction = true;
         this.setManagerName(this.task.user);
+        this.setParentTaskName(this.task.parentTask);
       } else {
         this.task = new Task();
       }
@@ -171,6 +173,7 @@ export class TaskComponent implements OnInit {
     this.task.project = task.project;
     this.projectSearch = new Project();
     this.setManagerName(this.task.user);
+    this.setParentTaskName(this.task.parentTask);
   }
 
   resetDates() {
@@ -213,6 +216,7 @@ export class TaskComponent implements OnInit {
       .subscribe(result => {
         if (result && result.id) {
           this.task.parentTask = result;
+          this.setParentTaskName(this.task.parentTask);
         }
       });
   }
@@ -255,6 +259,14 @@ export class TaskComponent implements OnInit {
       this.managerName = user.employeeId + ' : ' + user.firstName + ' ' + user.lastName;
     } else {
       this.managerName = "";
+    }
+  }
+
+  setParentTaskName(parentTask: ParentTask) {
+    if (parentTask && parentTask.name != null) {
+      this.parentTaskName = parentTask.name;
+    } else {
+      this.parentTaskName = "";
     }
   }
 
