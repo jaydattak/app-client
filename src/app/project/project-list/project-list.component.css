@@ -43,6 +43,11 @@
     -o-transform: translate(0,-25%);
     transform: translate(0,-25%);
 }
+
+.modal-body{
+    max-height: 250px;
+    overflow-y : scroll;
+}
  
 @media (min-width: 768px) {
     .modal-dialog {

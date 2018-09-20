@@ -41,6 +41,7 @@
     "Change Language" : "Changer de langue",
     "Enter First Name" : "Entrez votre prénom",
     "Enter Last Name" : "Entrer le nom de famille",
-    "Enter Employee Id" : "Entrez l'ID d'employé"
+    "Enter Employee Id" : "Entrez l'ID d'employé",
+    "Select Manager" : "Sélectionnez le gestionnaire"
 
 }

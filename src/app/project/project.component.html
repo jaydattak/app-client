@@ -1,28 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <body>
 	<div class="container small">
 		<form class="form-horizontal" #myForm="ngForm">
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="name">{{'Project' | translate }} :*</label>
-				<div class="col-sm-8">
+				<div class="col-sm-5">
 					<input type="text" class="form-control" id="name" required minlength="1" placeholder="{{'Enter Project Name' | translate }}"
-					 name="name" [(ngModel)]="project.name" #name="ngModel" />
+					 name="name" [(ngModel)]="project.name" #name="ngModel"  maxlength="250" />
 				</div>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-3">
-					<label class="control-label checkbox" for="setDate">
+				<div class="col-sm-2">
+					<label class="control-label checkbox" for="setDate" style="margin-left: 15px;">
 						<input type="checkbox" name="setDate" id="setDate" value="true" [(ngModel)]="project.setDate" (change)="resetDates()" />{{'Set
 						Start and End Date' | translate }}</label>
 				</div>
-				<div class="col-sm-6">
-					<div class="col-sm-4">
+				<div class="col-sm-5">
+					<div class="col-sm-4" style="padding-left: 0px;">
 						<input type="date" class="form-control input-sm" id="startDate" name="startDate" [(ngModel)]="project.startDate"
 						 [disabled]="!project.setDate" />
 					</div>
-					<div class="col-sm-4">
+					<div class="col-sm-4" style="padding-left: 0px;">
 						<input type="date" class="form-control input-sm" id="endDate" name="endDate" [(ngModel)]="project.endDate" min="{{project.startDate}}"
 						 [disabled]="!project.setDate" />
 					</div>
@@ -30,8 +29,8 @@
 			</div>
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="priority">
-					{{'Priority' | translate }} :{{project.priority}}</label>
-				<div class="col-sm-8">
+					{{'Priority' | translate }} : {{project.priority}}</label>
+				<div class="col-sm-5">
 					0
 					<input type="range" id="priority" name="priority" min="0" max="30" [(ngModel)]="project.priority" value="0" />
 				</div>
@@ -40,20 +39,20 @@
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="manager"> {{'Manager' | translate }} :
 				</label>
-				<div class="col-sm-6">
-					<input type="text" class="form-control" readonly name="manager" [(ngModel)]="managerName" />
+				<div class="col-sm-5">
+					<input type="text" placeholder="{{'Select Manager' | translate}}" class="form-control" readonly name="manager" [(ngModel)]="managerName" />
 				</div>
 				<button type="button" class="btn btn-info" (click)="searchManagers()">{{'Search' | translate }}</button>
 			</div>
 			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-8 text-right">
+				<div class="col-sm-offset-4 col-sm-6 text-right">
 					<button type="button" class="btn btn-default" [disabled]="!(myForm.form.valid && project.startDate < project.endDate)"
 					 (click)="addProject();">{{buttonText | translate}}</button>&nbsp;
 					<button type="button" class="btn btn-default" (click)="resetProject()">{{'Reset' | translate }}</button>
 				</div>
 			</div>
 		</form>
-		<div class="col-sm-10 text-center large">
+		<div class="col-sm-8 text-center large">
 			<h4 *ngIf="successMessage != ''">
 				<span class="label label-success">{{successMessage}}</span>
 			</h4>
@@ -62,14 +61,13 @@
 			</h4>
 			<hr />
 		</div>
-		<hr />
-		<div class="col-sm-10 ">
+		<div class="col-sm-8 ">
 			<input type="text" class="form-control input-sm col" id="searchText" required minlength="1" placeholder="{{'Search' | translate }}"
 			 name="searchText" [(ngModel)]="searchText" (keyup)="searchProjects()" />
 		</div>
-		<div class="col-sm-10 ">&nbsp;</div>
-		<div class="col-sm-10 ">
-			<label>{{'Sort By' | translate }} : &nbsp;</label>
+		<div class="col-sm-8 ">&nbsp;</div>
+		<div class="col-sm-8 ">
+			<label>{{'Sort By' | translate }} :&nbsp;</label>
 			<button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('startDate')">{{'Start Date' | translate
 				}}</button>
 			&nbsp;<button type="button" class="btn btn-info btn-sm" (click)="sortBySelection('endDate')">{{'End Date' |
@@ -80,11 +78,11 @@
 				translate
 				}}</button>
 		</div>
-		<div class="col-sm-10 ">&nbsp;</div>
+		<div class="col-sm-8">&nbsp;</div>
 		<div class="list-group medium" *ngFor="let projectObj of projects | async">
-			<div class="col-sm-10 list-group-item">
+			<div class="col-sm-8 list-group-item">
 				<div class="col-sm-8">
-					<div class="col-sm-12">
+					<div class="col-sm-8">
 						<label>{{'Project' | translate }} : {{projectObj.name}}</label>
 					</div>
 					<div class="col-sm-6">

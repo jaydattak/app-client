@@ -2,21 +2,16 @@
   <div class="modal-content">
     <div class="modal-header">
       <button type="button" class="close" (click)="close()">&times;</button>
-      <h4 class="modal-title">{{title | translate}}</h4>
+      <h4 class="modal-title">{{'Select Project' | translate}}</h4>
+      <input type="text" class="form-control input-sm" id="name" required (keyup)="updateSearch();" minlength="1"
+        placeholder="{{'Enter Search Text' | translate }}" name="name" [(ngModel)]="searchText" />
     </div>
     <div class="list-group modal-body">
-      <div class="list-group-item">
-        <input type="text" class="form-control input-sm" id="name" required (keyup)="updateSearch();" minlength="1"
-          placeholder="{{'Enter Search Text' | translate }}" name="name" [(ngModel)]="searchText" />
-      </div>
-      <div class="list-group-item">
-        <h5 class="modal-title medium text-center">{{'Select Project' | translate}}</h5>
-      </div>
       <ul class="list-group">
         <li class="list-group-item" *ngFor="let item of projects" (click)="setEntity(item)">{{item.name}}</li>
       </ul>
+      <div *ngIf="norecordfound">{{'No record found!' | translate}}</div>
     </div>
-    <div  *ngIf="norecordfound" class="modal-body">{{'No record found!' | translate}}</div>
     <div class="modal-footer">
       <button type="button" class="btn btn-default" (click)="close()">{{'Close' | translate}}</button>
     </div>
