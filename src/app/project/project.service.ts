@@ -27,7 +27,7 @@ export class ProjectService {
     }
 
     create(project: Project) {
-        if(project.manager && project.manager.id){
+        if(project.manager && project.manager.id == null){
             project.manager = null;
         }
         return this.http.post(this.getRequestUrl('add'), project)
@@ -36,7 +36,7 @@ export class ProjectService {
     }
 
     update(project: Project) {
-        if(project.manager && project.manager.id){
+        if(project.manager && project.manager.id == null){
             project.manager = null;
         }
         return this.http.put(this.getRequestUrl(project.id), project)

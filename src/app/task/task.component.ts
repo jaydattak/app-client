@@ -154,6 +154,7 @@ export class TaskComponent implements OnInit {
   resetTask() {
     this.task = new Task();
     this.managerName = "";
+    this.parentTaskName = "";
     this.buttonText = "Add";
     this.resetMessages();
     this.resetDates();

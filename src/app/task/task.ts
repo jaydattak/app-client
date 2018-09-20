@@ -14,5 +14,8 @@ export class Task {
     priority: number = 0;
     status: string;
     constructor() {
+        this.user = new User();
+        this.parentTask = new ParentTask();
+        this.project = new Project();
     }
 }

@@ -154,7 +154,7 @@
             </div>
           </div>
           <div class="col-sm-2">
-            <button type="button" class="btn btn-primary btn-sm" (click)="editTask(obj)">{{'Edit' | translate }}</button>
+            <button type="button" [disabled] = "obj.status == 'completed'" class="btn btn-primary btn-sm" (click)="editTask(obj)">{{'Edit' | translate }}</button>
             &nbsp;
             <button type="button" [disabled] = "obj.status == 'completed'" class="btn btn-info btn-sm" (click)="completeTask(obj)">{{'End Task' | translate }}</button>
           </div>
