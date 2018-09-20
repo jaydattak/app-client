@@ -27,12 +27,18 @@ export class ProjectService {
     }
 
     create(project: Project) {
+        if(project.manager && project.manager.id){
+            project.manager = null;
+        }
         return this.http.post(this.getRequestUrl('add'), project)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error || 'Server error'));
     }
 
     update(project: Project) {
+        if(project.manager && project.manager.id){
+            project.manager = null;
+        }
         return this.http.put(this.getRequestUrl(project.id), project)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error || 'Server error'));

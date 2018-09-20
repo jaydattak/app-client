@@ -105,10 +105,10 @@ export class ProjectComponent implements OnInit {
     this.resetMessages();
     this.project.id = project.id;
     this.project.name = project.name;
-    this.project.startDate = this.datePipe.transform(project.startDate, "yyyy-MM-dd");
-    this.project.endDate = this.datePipe.transform(project.endDate, "yyyy-MM-dd");
     this.project.priority = project.priority;
     this.project.setDate = project.setDate;
+    this.project.startDate = this.datePipe.transform(project.startDate, "yyyy-MM-dd");
+    this.project.endDate = this.datePipe.transform(project.endDate, "yyyy-MM-dd");
     this.project.manager = project.manager;
     this.setManagerName(this.project.manager);
   }
