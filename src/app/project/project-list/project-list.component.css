@@ -48,6 +48,12 @@
     max-height: 250px;
     overflow-y : scroll;
 }
+
+.list-group-item:hover  {
+    background-color: gray;
+    color: white;
+    cursor: pointer ;
+}
  
 @media (min-width: 768px) {
     .modal-dialog {
