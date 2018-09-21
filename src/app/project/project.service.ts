@@ -30,6 +30,10 @@ export class ProjectService {
         if(project.manager && project.manager.id == null){
             project.manager = null;
         }
+        if(!project.setDate){
+            project.startDate = null;
+            project.endDate = null;
+        }
         return this.http.post(this.getRequestUrl('add'), project)
             .map((res: Response) => res.json())
             .catch((error: any) => Observable.throw(error || 'Server error'));
@@ -38,6 +42,10 @@ export class ProjectService {
     update(project: Project) {
         if(project.manager && project.manager.id == null){
             project.manager = null;
+        }
+        if(!project.setDate){
+            project.startDate = null;
+            project.endDate = null;
         }
         return this.http.put(this.getRequestUrl(project.id), project)
             .map((res: Response) => res.json())

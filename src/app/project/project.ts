@@ -10,6 +10,7 @@ export class Project {
 	priority: number = 0;
 	noOfTasks: number;
 	noOfCompletedTasks: number;
+	status: string;
 	constructor() {
 		this.manager = new User();
 	}

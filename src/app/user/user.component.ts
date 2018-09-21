@@ -108,22 +108,6 @@ export class UserComponent implements OnInit {
     this.users = this.service.getAllBySort(str);
   }
 
-  /*sortByFirstName() {
-    this.searchText = "";
-    this.resetMessages();
-    this.users = this.service.getAllBySort('firstName');
-  }
-  sortByLastName() {
-    this.searchText = "";
-    this.resetMessages();
-    this.users = this.service.getAllBySort('lastName');
-  }
-  sortById() {
-    this.searchText = "";
-    this.resetMessages();
-    this.users = this.service.getAllBySort('id');
-  }*/
-
   searchUsers() {
     this.resetMessages();
     if (this.searchText == "") {

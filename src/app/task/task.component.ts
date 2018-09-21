@@ -194,7 +194,8 @@ export class TaskComponent implements OnInit {
   }
 
   sortBySelection(str: string) {
-    this.resetMessages()
+    this.searchText = "";
+    this.resetMessages();
     this.tasks = this.service.getAllBySort(str, this.projectSearch);
   }
 
@@ -282,6 +283,11 @@ export class TaskComponent implements OnInit {
       mesg += ' : ' + res.reason;
     }
     return mesg;
+  }
+
+  removeParentTask() {
+    this.task.parentTask = new ParentTask();
+    this.setParentTaskName(this.task.parentTask);
   }
 
   completeTask(task: Task) {

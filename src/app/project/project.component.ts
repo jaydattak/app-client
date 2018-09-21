@@ -40,7 +40,7 @@ export class ProjectComponent implements OnInit {
         this.loadAllUsers();
         this.successMessage = res.message;
       } else {
-        this.errorMessage =  this.getErrorMessage(res);
+        this.errorMessage = this.getErrorMessage(res);
       }
     },
       error => {
@@ -88,6 +88,26 @@ export class ProjectComponent implements OnInit {
     });
   }
 
+  suspendProject(project : Project) {
+    this.resetMessages();
+    project.status = 'suspend';
+    this.service.update(project).subscribe((res: any) => {
+      if (res.status) {
+        this.resetProject();
+        this.buttonText = "Add";
+        this.loadAllUsers();
+        this.successMessage = res.message;
+      } else {
+        this.errorMessage = this.getErrorMessage(res);
+        project.status = null;
+      }
+
+    }, error => {
+      this.errorMessage = error;
+      project.status = null;
+    });
+  }
+
   editProject(project: Project) {
     this.setValueToMainProject(project);
     this.buttonText = "Update";
@@ -106,9 +126,15 @@ export class ProjectComponent implements OnInit {
     this.project.id = project.id;
     this.project.name = project.name;
     this.project.priority = project.priority;
-    this.project.setDate = project.setDate;
-    this.project.startDate = this.datePipe.transform(project.startDate, "yyyy-MM-dd");
-    this.project.endDate = this.datePipe.transform(project.endDate, "yyyy-MM-dd");
+    if(project.startDate != null && project.endDate !=null ){
+      this.project.setDate = true;
+      this.project.startDate = this.datePipe.transform(project.startDate, "yyyy-MM-dd");
+      this.project.endDate = this.datePipe.transform(project.endDate, "yyyy-MM-dd");
+    } else{
+      this.project.setDate = false;
+      this.resetDates();
+    }
+   
     this.project.manager = project.manager;
     this.setManagerName(this.project.manager);
   }
@@ -130,7 +156,8 @@ export class ProjectComponent implements OnInit {
   }
 
   sortBySelection(str: string) {
-    this.resetMessages()
+    this.resetMessages();
+    this.searchText = "";
     this.projects = this.service.getAllBySort(str);
   }
 
@@ -160,7 +187,7 @@ export class ProjectComponent implements OnInit {
   }
 
   setManagerName(user: User) {
-    if (user) {
+    if (user && user.firstName != null) {
       this.managerName = user.employeeId + ' : ' + user.firstName + ' ' + user.lastName;
     } else {
       this.managerName = "";
@@ -170,6 +197,10 @@ export class ProjectComponent implements OnInit {
   resetMessages() {
     this.successMessage = "";
     this.errorMessage = "";
+  }
+  removeManager() {
+    this.project.manager = new User();
+    this.setManagerName(this.project.manager);
   }
 
   getErrorMessage(res: any) {
